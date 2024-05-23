@@ -2,7 +2,14 @@ import React from 'react'
 
 const Contacto = () => {
   return (
-    <div>Contacto</div>
+    <div>
+      <form action="" method="get">
+        <input type="text" name="email;" />
+        <input type="text" name="nombre" />
+        <input type="text" name="mensaje" />
+        <button>Enviar</button>
+      </form>
+    </div>
   )
 }
 
