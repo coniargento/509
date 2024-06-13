@@ -99,9 +99,13 @@ const Home = () => {
 
     const initUserLocation = () => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(initMap, (error) => {
-          handleLocationError(true, map.getCenter());
-        });
+        navigator.geolocation.getCurrentPosition(
+          initMap, 
+          (error) => {
+            handleLocationError(true, map.getCenter());
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
       } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, map.getCenter());
