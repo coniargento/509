@@ -4,13 +4,13 @@ import Script from 'next/script'; // Importa el componente Script de Next.js par
 
 const Home = () => {
   useEffect(() => { // useEffect se ejecuta cuando el componente se monta
-    const initMap = async () => { // Función asincrónica para inicializar el mapa
+    const initMap = async (position) => { // Función asincrónica para inicializar el mapa
       const { Map, InfoWindow } = await google.maps.importLibrary('maps'); // Importa las librerías de mapas e InfoWindow de Google Maps
       const { PlacesService, PlacesServiceStatus } = await google.maps.importLibrary('places'); // Importa las librerías de PlacesService y PlacesServiceStatus de Google Places
 
-      const center = new google.maps.LatLng(-34.6037, -58.3816); // Coordenadas de Buenos Aires
+      const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); // Coordenadas del usuario
       const map = new Map(document.getElementById('map'), { // Crea un nuevo mapa en el div con id 'map'
-        center: center, // Centra el mapa en Buenos Aires
+        center: userLocation, // Centra el mapa en la ubicación del usuario
         zoom: 14, // Nivel de zoom del mapa
         mapId: 'YOUR_MAP_ID', // Reemplaza 'YOUR_MAP_ID' con tu Map ID válido
       });
@@ -79,7 +79,7 @@ const Home = () => {
 
       // Añade un botón de búsqueda al mapa
       const searchButton = document.createElement('button'); // Crea un nuevo botón
-      searchButton.textContent = 'Buscar cafeterias en esta Área'; // Establece el texto del botón
+      searchButton.textContent = 'Buscar cafeterías en esta Área'; // Establece el texto del botón
       searchButton.classList.add('search-button'); // Añade una clase al botón para estilos
       searchButton.addEventListener('click', performSearch); // Añade un evento de clic al botón que llama a performSearch
 
@@ -89,8 +89,27 @@ const Home = () => {
       performSearch(); // Llama a performSearch para realizar una búsqueda inicial
     };
 
+    const handleLocationError = (browserHasGeolocation, pos) => {
+      console.log(
+        browserHasGeolocation
+          ? 'Error: The Geolocation service failed.'
+          : 'Error: Your browser doesn\'t support geolocation.'
+      );
+    };
+
+    const initUserLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(initMap, (error) => {
+          handleLocationError(true, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, map.getCenter());
+      }
+    };
+
     if (typeof window !== 'undefined') { // Verifica si el código se está ejecutando en el cliente
-      initMap(); // Inicializa el mapa
+      initUserLocation(); // Inicializa el mapa con la ubicación del usuario
     }
   }, []); // El array vacío [] asegura que el efecto solo se ejecute una vez al montar el componente
 

@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "cafecito",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,10 +12,15 @@
     "@vis.gl/react-google-maps": "^1.0.2",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "y": "^0.3.2"
   },
   "devDependencies": {
     "eslint": "^8",
     "eslint-config-next": "14.2.3"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/coniargento/509.git",
+  "author": "Jesii-22 <jesimarzeniuk@gmail.com>",
+  "license": "MIT"
 }
