@@ -30,8 +30,8 @@ const Home = () => {
           bounds: bounds, // Utiliza los límites del mapa como área de búsqueda
           type: 'cafe', // Tipo de lugar a buscar (cafeterías)
         };
-
-        service.nearbySearch(request, (results, status) => { // Realiza la búsqueda de lugares cercanos
+  
+      service.nearbySearch(request, (results, status) => { // Realiza la búsqueda de lugares cercanos
           if (status === PlacesServiceStatus.OK && results) { // Verifica si la búsqueda fue exitosa y hay resultados
             clearMarkers(); // Limpia los marcadores actuales
             results.forEach((place) => { // Itera sobre los resultados de la búsqueda
@@ -50,8 +50,10 @@ const Home = () => {
                 <div class="custom-info-window">
                   <h3>${place.name || "hola"}</h3>
                   <p>${place.vicinity}</p>
+                  <p>${place.rating}</p>
+                  <p>${place.schedule}</p>
                 </div>
-              `;
+              `; //vinicity: representa la ubicación aproximada o dirección de un lugar devuelto por la API de Google Places
 
               const infoWindow = new InfoWindow({ // Crea un nuevo InfoWindow
                 content: infoWindowContent, // Establece el contenido del InfoWindow
