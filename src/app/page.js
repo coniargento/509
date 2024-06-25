@@ -126,3 +126,4 @@ const Home = () => {
 };
 
 export default Home; // Exporta el componente Home como el componente por defecto
+ 
