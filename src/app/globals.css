@@ -3,6 +3,8 @@
 
 *{
   font-family: 'Montserrat', sans-serif; /* aplicamos la fuente Montserrat a todo el proyecto*/
+  padding: 0;
+  margin: 0;
 }
 
 .custom-info-window {
@@ -36,4 +38,80 @@
   font-size: 30px;
   margin: 20px;
   padding: 15px;
+}
+
+/* Estilos personalizados para los controles de Google Maps */
+.gm-style .gm-bundled-control .gmnoprint,
+.gm-style .gm-bundled-control .gm-svpc,
+.gm-style .gm-bundled-control .gm-fullscreen-control,
+.gm-style .gm-bundled-control .gm-style-i {
+  background-color: #bd0f57bb !important; /* Cambiar el color de fondo */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 30px !important; /* Hacer los bordes redondeados */
+} /* estilos del boton de street view */
+
+
+/* Estilos específicos para el botón de tipo de mapa (Mapa/Satélite) */
+.gm-style .gm-style-mtc button {
+  background-color: #ad9a6a !important; /* Cambiar el color de fondo */
+  color: #590606 !important; /* Cambiar el color del texto */
+  border-radius: 5px !important; /* Hacer los bordes redondeados */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-family: "Montserrat", sans-serif !important; /* Aplicar la fuente Montserrat */
+  font-weight: bold;
+  padding: 10px;
+}
+.gm-style .gm-style-mtc button:hover {
+  background-color: #ceb882 !important; /* Cambiar el color de fondo */
+}
+
+/* Estilos específicos para el botón de pantalla completa */
+.gm-style .gm-fullscreen-control {
+  background-color: #ad9a6a !important; /* Cambiar el color de fondo */
+  color: #fff !important; /* Cambiar el color del texto */
+  border-radius: 5px !important; /* Hacer los bordes redondeados */
+  font-family: "Montserrat", sans-serif !important; /* Aplicar la fuente Montserrat */
+}
+
+/* Estilos específicos para los botones de zoom */
+.gm-style .gm-control-active.gm-control-active {
+  background-color: #666 !important; /* Cambiar el color de fondo */
+  color: #fff !important; /* Cambiar el color del texto */
+  border-radius: 5px !important; /* Hacer los bordes redondeados */
+  font-family: "Montserrat", sans-serif !important; /* Aplicar la fuente Montserrat */
+}
+
+h1{
+  text-align: center;
+  font-size: 50px;
+  justify-content: center;
+
+}
+
+.paginainterna{
+  background-color: antiquewhite;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  margin: 10px;
+}
+
+.botonatras{
+    position: absolute;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: white;
+    background-color: #d66631;
+    border: none;
+    border-radius: 80px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botonatras:hover {
+  background-color: #d43759;
+}
+
+.datos{
+  padding: 10px;
 }
