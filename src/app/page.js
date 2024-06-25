@@ -3,118 +3,121 @@ import React, { useEffect } from 'react'; // Importa React y el hook useEffect
 import Script from 'next/script'; // Importa el componente Script de Next.js para cargar scripts externos
 
 const Home = () => {
-  useEffect(() => { // useEffect se ejecuta cuando el componente se monta
-    const initMap = async (position) => { // Función asincrónica para inicializar el mapa
-      const { Map, InfoWindow } = await google.maps.importLibrary('maps'); // Importa las librerías de mapas e InfoWindow de Google Maps
-      const { PlacesService, PlacesServiceStatus } = await google.maps.importLibrary('places'); // Importa las librerías de PlacesService y PlacesServiceStatus de Google Places
-
-      const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); // Coordenadas del usuario
-      const map = new Map(document.getElementById('map'), { // Crea un nuevo mapa en el div con id 'map'
-        center: userLocation, // Centra el mapa en la ubicación del usuario
-        zoom: 14, // Nivel de zoom del mapa
-        mapId: 'YOUR_MAP_ID', // Reemplaza 'YOUR_MAP_ID' con tu Map ID válido
-      });
-
-      const service = new PlacesService(map); // Crea un nuevo servicio de Places asociado al mapa
-      let markers = []; // Arreglo para almacenar los marcadores
-      let currentInfoWindow = null; // Variable para almacenar el InfoWindow actualmente abierto
-
-      const clearMarkers = () => { // Función para limpiar los marcadores del mapa
-        markers.forEach(marker => marker.setMap(null)); // Elimina cada marcador del mapa
-        markers = []; // Vacía el arreglo de marcadores
-      };
-
-      const performSearch = () => { // Función para realizar la búsqueda de lugares
-        const bounds = map.getBounds(); // Obtiene los límites actuales del mapa
-        const request = { // Crea una solicitud de búsqueda
-          bounds: bounds, // Utiliza los límites del mapa como área de búsqueda
-          type: 'cafe', // Tipo de lugar a buscar (cafeterías)
+    useEffect(() => {
+      const initMap = async (position) => {
+        const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+        const { PlacesService, PlacesServiceStatus } = await google.maps.importLibrary('places');
+  
+        const center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        const map = new Map(document.getElementById('map'), {
+          center: center,
+          zoom: 14,
+        });
+  
+        const service = new PlacesService(map);
+        let markers = [];
+        let currentInfoWindow = null;
+  
+        const clearMarkers = () => {
+          markers.forEach(marker => marker.setMap(null));
+          markers = [];
         };
   
-      service.nearbySearch(request, (results, status) => { // Realiza la búsqueda de lugares cercanos
-          if (status === PlacesServiceStatus.OK && results) { // Verifica si la búsqueda fue exitosa y hay resultados
-            clearMarkers(); // Limpia los marcadores actuales
-            results.forEach((place) => { // Itera sobre los resultados de la búsqueda
-              const marker = new google.maps.Marker({ // Crea un nuevo marcador con google.maps.Marker
-                map: map, // Asocia el marcador al mapa
-                position: place.geometry.location, // Establece la posición del marcador
-                title: place.name, // Título del marcador
-                icon: { // Define un ícono personalizado para el marcador
-                  url: 'https://cdn-icons-png.flaticon.com/512/5497/5497803.png', // URL del ícono (puedes cambiar el color aquí)
-                  scaledSize: new google.maps.Size(50, 50)
-                },
-              });
-
-              // Contenido del InfoWindow (popup)
-              const infoWindowContent = ` 
-                <div class="custom-info-window">
-                  <h3>${place.name || "hola"}</h3>
-                  <p>${place.vicinity}</p>
-                  <p>${place.rating}</p>
-                  <p>${place.schedule}</p>
-                </div>
-              `; //vinicity: representa la ubicación aproximada o dirección de un lugar devuelto por la API de Google Places
-
-              const infoWindow = new InfoWindow({ // Crea un nuevo InfoWindow
-                content: infoWindowContent, // Establece el contenido del InfoWindow
-              });
-
-              marker.addListener('click', () => { // Añade un evento de clic al marcador
-                if (currentInfoWindow) { // Si hay un InfoWindow abierto, ciérralo
-                  currentInfoWindow.close();
-                }
-                infoWindow.open({ // Abre el nuevo InfoWindow cuando se hace clic en el marcador
-                  anchor: marker, // Asocia el InfoWindow al marcador
-                  map, // Asocia el InfoWindow al mapa
-                  shouldFocus: false, // No enfocar el InfoWindow
+        const performSearch = () => {
+          const bounds = map.getBounds();
+          const request = {
+            bounds: bounds,
+            type: 'cafe',
+          };
+  
+          service.nearbySearch(request, (results, status) => {
+            if (status === PlacesServiceStatus.OK && results) {
+              clearMarkers();
+              results.forEach((place) => {
+                const marker = new google.maps.Marker({
+                  map: map,
+                  position: place.geometry.location,
+                  title: place.name,
+                  icon: {
+                    url: 'https://cdn-icons-png.flaticon.com/512/5497/5497803.png',
+                    scaledSize: new google.maps.Size(50, 50),
+                  },
                 });
-                currentInfoWindow = infoWindow; // Actualiza la referencia al InfoWindow abierto
+  
+                const infoWindowContent = `
+                  <div class="custom-info-window">
+                    <h3>${place.name}</h3>
+                    <p>${place.vicinity}</p>
+                    <p>${place.rating}</p>
+                    <a href="/details?name=${encodeURIComponent(place.name)}&vicinity=${encodeURIComponent(place.vicinity)}" >
+                    <button>Ver más</button>
+                  </a>
+                  </div>
+                `;
+  
+                const infoWindow = new InfoWindow({
+                  content: infoWindowContent,
+                });
+  
+                marker.addListener('click', () => {
+                  if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                  }
+                  localStorage.setItem('selectedPlace', JSON.stringify(place.photos[0].getUrl()));
+                  infoWindow.open({
+                    anchor: marker,
+                    map,
+                    shouldFocus: false,
+                  });
+                  currentInfoWindow = infoWindow;
+  
+  
+                });
+  
+                markers.push(marker);
               });
-
-              markers.push(marker); // Añade el marcador al arreglo de marcadores
-            });
-          } else { // Si no hay resultados o la búsqueda falla
-            console.log('No results'); // Muestra un mensaje en la consola
-          }
-        });
+            } else {
+              console.log('No results');
+            }
+          });
+        };
+  
+        const searchButton = document.createElement('button');
+        searchButton.textContent = 'Buscar en esta Área';
+        searchButton.classList.add('search-button');
+        searchButton.addEventListener('click', performSearch);
+  
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(searchButton);
+  
+        performSearch();
       };
-
-      // Añade un botón de búsqueda al mapa
-      const searchButton = document.createElement('button'); // Crea un nuevo botón
-      searchButton.textContent = 'Buscar cafeterías en esta Área'; // Establece el texto del botón
-      searchButton.classList.add('search-button'); // Añade una clase al botón para estilos
-      searchButton.addEventListener('click', performSearch); // Añade un evento de clic al botón que llama a performSearch
-
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(searchButton); // Añade el botón a los controles del mapa en la posición superior central
-
-      // Realiza una búsqueda inicial al cargar el mapa
-      performSearch(); // Llama a performSearch para realizar una búsqueda inicial
-    };
-
-    const handleLocationError = (browserHasGeolocation, pos) => {
-      console.log(
-        browserHasGeolocation
-          ? 'Error: The Geolocation service failed.'
-          : 'Error: Your browser doesn\'t support geolocation.'
-      );
-    };
-
-    const initUserLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(initMap, (error) => {
-          handleLocationError(true, map.getCenter());
-        });
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, map.getCenter());
+  
+      const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+          browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(map);
+      };
+  
+  
+      if (typeof window !== 'undefined') {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              initMap(position);
+            },
+            () => {
+              handleLocationError(true, currentInfoWindow, map.getCenter());
+            }
+          );
+        } else {
+          handleLocationError(false, currentInfoWindow, map.getCenter());
+        }
       }
-    };
-
-    if (typeof window !== 'undefined') { // Verifica si el código se está ejecutando en el cliente
-      initUserLocation(); // Inicializa el mapa con la ubicación del usuario
-    }
-  }, []); // El array vacío [] asegura que el efecto solo se ejecute una vez al montar el componente
-
+    }, []);
   return (
     <>
       <Script
