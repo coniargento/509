@@ -141,12 +141,47 @@ h1{
   padding: 10px;
 }
 
-.imgpage{
+.imgpage {
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), /* Sombra general */
-  0 0 30px rgba(255, 255, 255, 0.5) inset; /* Sombra interna para efecto iluminado */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 
+              0 0 30px rgba(255, 255, 255, 0.5) inset; /* Sombra general e interna */
   padding: 10px; /* Espacio interno entre la imagen y el borde */
   margin-left: 35%;
   width: 30%;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones para la animación */
+}
+
+.imgpage:hover {
+  transform: scale(1.05); /* Escala la imagen al 105% */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 
+              0 0 40px rgba(255, 255, 255, 0.7) inset; /* Sombra más intensa */
+}
+
+/* ESTRELLAS */
+.star {
+  font-size: 20px;
+  color: transparent;
+  text-shadow: 0 0 0 yellow;
+}
+
+.star.full {
+  color: yellow;
+}
+
+.star.half {
+  position: relative;
+}
+
+.star.half::before {
+  content: '★';
+  color: yellow;
+  position: absolute;
+  overflow: hidden;
+  width: 50%;
+}
+
+.star.empty {
+  color: transparent;
+  text-shadow: 0 0 0 yellow;
 }
