@@ -27,6 +27,24 @@
   color: #4B543B; /*color del texto*/
   font-weight: 600;
 }
+
+.custom-info-window button {
+  margin-top: 5px;
+  margin-left: 40%;
+  background-color: rgba(232 217 191 / 89%);
+  color: #90614a;
+  padding: 2px 5px; /* Uso abreviado para el padding */
+  border: 1px solid #90614a; /* Aseguramos un grosor de borde definido */
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra inicial */
+  transition: box-shadow 0.3s ease; /* Añade una transición suave */
+  cursor: pointer; /* Cambia el cursor a una mano cuando se pasa sobre el botón */
+}
+
+.custom-info-window button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra más intensa al pasar el ratón */
+}
+
 .search-button {
   background-color: #B57F50;
   border: 2px solid #4B543B;
@@ -40,12 +58,16 @@
   padding: 15px;
 }
 
+.search-button:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Sombra más intensa al pasar el ratón */
+}
+
 /* Estilos personalizados para los controles de Google Maps */
 .gm-style .gm-bundled-control .gmnoprint,
 .gm-style .gm-bundled-control .gm-svpc,
 .gm-style .gm-bundled-control .gm-fullscreen-control,
 .gm-style .gm-bundled-control .gm-style-i {
-  background-color: #bd0f57bb !important; /* Cambiar el color de fondo */
+  background-color: #ad9a6a91 !important; /* Cambiar el color de fondo */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   border-radius: 30px !important; /* Hacer los bordes redondeados */
 } /* estilos del boton de street view */
@@ -68,15 +90,15 @@
 /* Estilos específicos para el botón de pantalla completa */
 .gm-style .gm-fullscreen-control {
   background-color: #ad9a6a !important; /* Cambiar el color de fondo */
-  color: #fff !important; /* Cambiar el color del texto */
+  color: transparent !important; /* Cambiar el color del texto */
   border-radius: 5px !important; /* Hacer los bordes redondeados */
   font-family: "Montserrat", sans-serif !important; /* Aplicar la fuente Montserrat */
 }
 
 /* Estilos específicos para los botones de zoom */
 .gm-style .gm-control-active.gm-control-active {
-  background-color: #666 !important; /* Cambiar el color de fondo */
-  color: #fff !important; /* Cambiar el color del texto */
+  background-color: #ad9a6a !important; /* Cambiar el color de fondo */
+  color: transparent !important; /* Cambiar el color del texto */
   border-radius: 5px !important; /* Hacer los bordes redondeados */
   font-family: "Montserrat", sans-serif !important; /* Aplicar la fuente Montserrat */
 }
@@ -85,15 +107,17 @@ h1{
   text-align: center;
   font-size: 50px;
   justify-content: center;
+  text-shadow: 2px 2px 5px #795548, -2px -2px 5px #7b4b05, 2px -2px 5px #cba28c, -2px 2px 5px #ff8052;
+
 
 }
 
 .paginainterna{
   background-color: antiquewhite;
-  width: 100%;
-  height: 100vh;
+  /* width: 100%; */
+  height: 100vh; 
   padding: 20px;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 .botonatras{
@@ -113,5 +137,16 @@ h1{
 }
 
 .datos{
+  text-align: center;
   padding: 10px;
+}
+
+.imgpage{
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), /* Sombra general */
+  0 0 30px rgba(255, 255, 255, 0.5) inset; /* Sombra interna para efecto iluminado */
+  padding: 10px; /* Espacio interno entre la imagen y el borde */
+  margin-left: 35%;
+  width: 30%;
+  text-align: center;
 }

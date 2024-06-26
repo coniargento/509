@@ -40,7 +40,7 @@ const Details = () => {
             <p className="datos">{reviews}</p>
 
             {selectedPlace && (
-                <img src={selectedPlace} alt={`Photo of ${selectedPlace.name}`} />
+                <img className="imgpage" src={selectedPlace} alt={`Photo of ${selectedPlace.name}`} />
             )}
         </div>
     );
