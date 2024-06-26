@@ -24,6 +24,8 @@ const Home = () => {
         markers = [];
       };
 
+      //generador estrellas//
+
       const generateStars = (rating) => {
         const fullStar = '<span class="star full">★</span>';
         const halfStar = '<span class="star half">★</span>';
