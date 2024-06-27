@@ -9,10 +9,16 @@ const Details = () => {
     const router = useRouter();
     const name = useSearchParams().get('name')
     const vicinity = useSearchParams().get('vicinity')
-    const rating = useSearchParams().get('rating')
-    const reviews = useSearchParams().get('reviews')
-
-
+    const estrellas = (rating) => {
+        const fullStarWidth = (rating / 5) * 100; // Regla de 3 simple para el ancho de las estrellas llenas
+        return `
+          <div class="stars-container">
+            <div class="stars-background"></div>
+            <div class="stars-foreground" style="width: ${fullStarWidth}%;"></div>
+          </div>
+          <span class="rating-value">${rating}</span>
+        `;
+      };
 
     const [selectedPlace, setSelectedPlace] = useState(null);
 
@@ -36,9 +42,8 @@ const Details = () => {
                 <h1>{name}</h1>
             </div>
             <p className="datos">{vicinity}</p>
-            <p className="datos">{rating}</p>
-            <p className="datos">{reviews}</p>
-
+            <p className="datos">{estrellas}</p>
+            
             {selectedPlace && (
                 <img className="imgpage" src={selectedPlace} alt={`Photo of ${selectedPlace.name}`} />
             )}
