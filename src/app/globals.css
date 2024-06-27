@@ -186,3 +186,13 @@ h1{
   z-index: 2;
   overflow: hidden;
 }
+
+
+.marker-icon {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones para la animación */
+}
+
+.marker-icon:hover {
+  transform: scale(1.2); /* Escala la imagen al 120% */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra más intensa al pasar el ratón */
+}

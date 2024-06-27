@@ -41,6 +41,8 @@ const Home = () => {
           type: 'cafe',
         };
 
+        //img  icono cafe
+
         service.nearbySearch(request, (results, status) => {
           if (status === PlacesServiceStatus.OK && results) {
             clearMarkers();
@@ -53,6 +55,23 @@ const Home = () => {
                   url: 'https://cdn-icons-png.flaticon.com/512/5497/5497803.png',
                   scaledSize: new google.maps.Size(50, 50),
                 },
+              });
+
+              // Añadir evento de mouseover para aplicar la clase de animación
+              google.maps.event.addListener(marker, 'mouseover', () => {
+                marker.setIcon({
+                  url: 'https://cdn-icons-png.flaticon.com/512/5497/5497803.png',
+                  scaledSize: new google.maps.Size(50, 50),
+                  className: 'marker-icon-hover', // Clase que define la animación
+                });
+              });
+
+              // Añadir evento de mouseout para quitar la clase de animación
+              google.maps.event.addListener(marker, 'mouseout', () => {
+                marker.setIcon({
+                  url: 'https://cdn-icons-png.flaticon.com/512/5497/5497803.png',
+                  scaledSize: new google.maps.Size(50, 50),
+                });
               });
 
               const infoWindowContent = `
