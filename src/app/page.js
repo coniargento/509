@@ -41,8 +41,6 @@ const Home = () => {
           type: 'cafe',
         };
 
-        //img  icono cafe
-
         service.nearbySearch(request, (results, status) => {
           if (status === PlacesServiceStatus.OK && results) {
             clearMarkers();
@@ -93,7 +91,10 @@ const Home = () => {
                 if (currentInfoWindow) {
                   currentInfoWindow.close();
                 }
-                localStorage.setItem('selectedPlace', JSON.stringify(place.photos[0].getUrl()));
+                localStorage.setItem('selectedPlace', JSON.stringify({
+                  photo: place.photos[0]?.getUrl() || '',
+                  rating: place.rating
+                }));
                 infoWindow.open({
                   anchor: marker,
                   map,

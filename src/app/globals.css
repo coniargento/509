@@ -149,6 +149,7 @@ h1{
   margin-left: 35%;
   width: 30%;
   text-align: center;
+  margin-top: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones para la animación */
 }
 
@@ -159,11 +160,13 @@ h1{
 }
 
 /* ESTRELLAS */
+
 .stars-container {
   display: inline-block;
   position: relative;
   width: 80px; /* Ajusta este valor según el tamaño de tus estrellas */
   height: 16px; /* Ajusta según la altura de tu imagen */
+  margin-right: 8px; /* Añade espacio entre las estrellas y el rating */
 }
 
 .stars-background, .stars-foreground {
@@ -186,6 +189,12 @@ h1{
   z-index: 2;
   overflow: hidden;
 }
+
+.rating-value {
+  font-weight: bold;
+  font-size: 1.2em; /* Ajusta el tamaño de la fuente para que sea legible */
+}
+
 
 
 .marker-icon {
