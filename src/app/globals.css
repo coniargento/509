@@ -159,29 +159,30 @@ h1{
 }
 
 /* ESTRELLAS */
-.star {
-  font-size: 20px;
-  color: transparent;
-  text-shadow: 0 0 0 yellow;
-}
-
-.star.full {
-  color: yellow;
-}
-
-.star.half {
+.stars-container {
+  display: inline-block;
   position: relative;
+  width: 80px; /* Ajusta este valor según el tamaño de tus estrellas */
+  height: 16px; /* Ajusta según la altura de tu imagen */
 }
 
-.star.half::before {
-  content: '★';
-  color: yellow;
+.stars-background, .stars-foreground {
   position: absolute;
-  overflow: hidden;
-  width: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  /* background-repeat: no-repeat; */
 }
 
-.star.empty {
-  color: transparent;
-  text-shadow: 0 0 0 yellow;
+.stars-background {
+  background-image: url('components/img/estrella-02.png'); /* Imagen con las estrellas vacías */
+  z-index: 1;
+}
+
+.stars-foreground {
+  background-image: url('components/img/estrella-01.png'); /* Imagen con las estrellas llenas */
+  z-index: 2;
+  overflow: hidden;
 }

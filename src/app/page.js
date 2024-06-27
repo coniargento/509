@@ -1,7 +1,6 @@
-'use client'; // Indica que este archivo se ejecuta en el lado del cliente
-import React, { useEffect } from 'react'; // Importa React y el hook useEffect
-import Script from 'next/script'; // Importa el componente Script de Next.js para cargar scripts externos
-
+'use client';
+import React, { useEffect } from 'react';
+import Script from 'next/script';
 
 const Home = () => {
   useEffect(() => {
@@ -24,22 +23,15 @@ const Home = () => {
         markers = [];
       };
 
-      //generador estrellas//
-
-      const generateStars = (rating) => {
-        const fullStar = '<span class="star full">★</span>';
-        const halfStar = '<span class="star half">★</span>';
-        const emptyStar = '<span class="star empty">★</span>';
-        const maxStars = 5;
-        const fullStars = Math.floor(rating);
-        const halfStars = rating % 1 >= 0.5 ? 1 : 0;
-        const emptyStars = maxStars - fullStars - halfStars;
-
-        return (
-          fullStar.repeat(fullStars) +
-          halfStar.repeat(halfStars) +
-          emptyStar.repeat(emptyStars)
-        );
+      const generateStarsHTML = (rating) => {
+        const fullStarWidth = (rating / 5) * 100; // Regla de 3 simple para el ancho de las estrellas llenas
+        return `
+          <div class="stars-container">
+            <div class="stars-background"></div>
+            <div class="stars-foreground" style="width: ${fullStarWidth}%;"></div>
+          </div>
+          <span class="rating-value">${rating}</span>
+        `;
       };
 
       const performSearch = () => {
@@ -67,7 +59,7 @@ const Home = () => {
                 <div class="custom-info-window">
                   <h3>${place.name}</h3>
                   <p>${place.vicinity}</p>
-                  <p>${generateStars(place.rating)} ${place.rating}</p>
+                  <div>${generateStarsHTML(place.rating)}</div>
                   <a href="/details?name=${encodeURIComponent(place.name)}&vicinity=${encodeURIComponent(place.vicinity)}">
                     <button>Ver más</button>
                   </a>
@@ -138,12 +130,12 @@ const Home = () => {
   return (
     <>
       <Script
-        strategy="beforeInteractive" // Carga el script antes de que el resto del contenido interactivo de la página se cargue
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.CLAVE_API_GOOGLE}&libraries=places`} // URL del script de Google Maps con la clave de API y las bibliotecas necesarias
+        strategy="beforeInteractive"
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.CLAVE_API_GOOGLE}&libraries=places`}
       />
-      <div id="map" style={{ height: '100vh', width: '100%' }} /> {/* Div para contener el mapa */}
+      <div id="map" style={{ height: '100vh', width: '100%' }} />
     </>
   );
 };
 
-export default Home; // Exporta el componente Home como el componente por defecto
+export default Home;
